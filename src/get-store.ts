@@ -4,16 +4,16 @@ import { configureStore } from '@reduxjs/toolkit';
 import {
   mainMenuReducer as mainMenu,
   MainMenuState,
-} from './modules/main-menu/main-menu-reducer';
-import { gameReducer as game, GameState } from './modules/game/game-reducer';
+} from './screens/main-menu/main-menu-reducer';
+import { gameReducer as game, GameState } from './screens/game/game-reducer';
 import {
   playersReducer as players,
   PlayersState,
-} from './modules/players/players-reducer';
+} from './screens/players/players-reducer';
 import {
   stopwatchReducer as stopwatch,
   StopwatchState,
-} from './modules/stopwatch/stopwatch-reducer';
+} from './screens/stopwatch/stopwatch-reducer';
 // import { persistStore, persistReducer, } from 'redux-persist'
 // import storage from 'redux-persist/lib/storage'
 // import { composeWithDevTools, } from 'redux-devtools-extension';

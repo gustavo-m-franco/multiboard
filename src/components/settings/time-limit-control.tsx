@@ -84,7 +84,7 @@ export class TimeLimitControl extends Component<
     this.setState({ editing: true });
   };
 
-  render(): void {
+  render(): React.ReactNode {
     return (
       <View style={styles.container}>
         <View style={styles.innerContainer}>

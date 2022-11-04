@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install modules
+      - name: Install screens
         run: yarn
       - name: Run ESLint
         run: yarn lint

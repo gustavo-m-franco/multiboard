@@ -9,7 +9,7 @@ import {
 import { Icon } from '@rneui/themed';
 import { trimName } from './../../utility/format';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack/lib/typescript/src/types';
-import { RootStackParamList, Screens } from '../../modules/navigation';
+import { RootStackParamList, Screens } from '../../screens/navigation';
 import { AnimatedButton } from '../button/animated-button';
 
 interface FooterSaveGameProps {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { StartNewGamePayload } from '../../modules/game/game-reducer';
-import AnimatedButton from '../button/animated-button';
+import { StartNewGamePayload } from '../../screens/game/game-reducer';
+import { AnimatedButton } from '../button/animated-button';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack/lib/typescript/src/types';
-import { RootStackParamList } from '../../modules/navigation';
+import { RootStackParamList } from '../../screens/navigation';
 
 interface FooterNewGameProps {
   navigation: NativeStackNavigationProp<RootStackParamList>;
