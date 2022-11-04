@@ -2,6 +2,7 @@ module.exports = {
   root: true,
   extends: [
     '@react-native-community/eslint-config',
+    'airbnb-typescript',
     'standard-with-typescript',
     'eslint-config-prettier',
   ],

@@ -1,6 +1,5 @@
-import { combineReducers, Middleware } from 'redux';
 import flipper from 'redux-flipper';
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, combineReducers, Middleware } from '@reduxjs/toolkit';
 import {
   mainMenuReducer as mainMenu,
   MainMenuState,
