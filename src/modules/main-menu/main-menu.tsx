@@ -1,19 +1,24 @@
-import React, { Component } from 'react'
-import { StyleSheet, Text, View, Image, Animated, BackHandler } from 'react-native'
-import { Alert } from './Alert'
-// import {
-//   NewGameSettings,
-//   Scoreboard,
-//   SavedGames,
-// } from './../../utility/constants';
-import AnimatedButton from './AnimatedButton'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack/lib/typescript/src/types';
+import { RootStackParamList, Screens } from '../navigation';
+import {
+  Animated,
+  BackHandler,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import React, { Component } from 'react';
+import { AnimatedButton } from '../../components/button/animated-button';
+import { Alert } from '../alert';
+import { SavedGames } from './main-menu-reducer';
 
 interface MainMenuProps {
-  navigation: unknown;
+  navigation: NativeStackNavigationProp<RootStackParamList>;
   activeGame?: unknown;
   maxScore: number;
   maxScoreWins: boolean;
-  savedGames: unknown[];
+  savedGames: SavedGames;
   edited: boolean;
 }
 
@@ -24,36 +29,29 @@ interface MainMenuState {
   showGameInProgressAlert: boolean;
 }
 
-const DELAY_INTERVAL = 250
-const BUTTON_1_ANIMATION_DELAY = 1400
-const BUTTON_2_ANIMATION_DELAY = BUTTON_1_ANIMATION_DELAY + DELAY_INTERVAL
-const BUTTON_3_ANIMATION_DELAY = BUTTON_1_ANIMATION_DELAY + (2 * DELAY_INTERVAL)
-const BUTTON_4_ANIMATION_DELAY = BUTTON_1_ANIMATION_DELAY + (3 * DELAY_INTERVAL)
+const DELAY_INTERVAL = 250;
+const BUTTON_1_ANIMATION_DELAY = 1400;
+const BUTTON_2_ANIMATION_DELAY = BUTTON_1_ANIMATION_DELAY + DELAY_INTERVAL;
+const BUTTON_3_ANIMATION_DELAY = BUTTON_1_ANIMATION_DELAY + 2 * DELAY_INTERVAL;
+const BUTTON_4_ANIMATION_DELAY = BUTTON_1_ANIMATION_DELAY + 3 * DELAY_INTERVAL;
 
-class MainMenu extends Component<MainMenuProps, MainMenuState> {
+export class MainMenu extends Component<MainMenuProps, MainMenuState> {
   constructor(props: MainMenuProps) {
-    super(props)
+    super(props);
     this.state = {
       bringMenusAnimationOne: new Animated.Value(-120),
       bringMenusAnimationTwo: new Animated.Value(800),
       showGameInProgressAlert: false,
-    }
+    };
   }
 
-  static navigationOptions = () => {
-    return {
-      headerTitle: null,
-      header: null,
-    }
-  };
-
-  componentDidMount() {
-    this.startAnimation()
-    this.setState({ key: Math.random() })
+  componentDidMount(): void {
+    this.startAnimation();
+    this.setState({ key: Math.random() });
   }
 
   startAnimation = () => {
-    const delayOffset = 1400
+    const delayOffset = 1400;
     Animated.parallel([
       Animated.timing(this.state.bringMenusAnimationOne, {
         toValue: 70,
@@ -67,20 +65,20 @@ class MainMenu extends Component<MainMenuProps, MainMenuState> {
         duration: 600,
         useNativeDriver: true,
       }),
-    ]).start()
+    ]).start();
   };
 
   startNewGame = () => {
-    const { edited, navigation } = this.props
+    const { navigation, edited } = this.props;
     if (edited) {
-      this.setState({ showGameInProgressAlert: true })
+      this.setState({ showGameInProgressAlert: true });
     } else {
-      // navigation.navigate(NewGameSettings);
+      navigation.navigate(Screens.NewGame);
     }
   };
 
   hideGameInProgressAlert = () => {
-    this.setState({ showGameInProgressAlert: false })
+    this.setState({ showGameInProgressAlert: false });
   };
 
   continueGame = () => {
@@ -93,97 +91,91 @@ class MainMenu extends Component<MainMenuProps, MainMenuState> {
 
   exitGame = () => {
     BackHandler.exitApp();
-  }
+  };
 
-  render() {
-    const {
-      bringMenusAnimationOne,
-      bringMenusAnimationTwo,
-    } = this.state
-    const { edited, savedGames } = this.props
-    const hasSavedGames = savedGames.length > 0
+  render(): React.ReactNode {
+    const { bringMenusAnimationOne, bringMenusAnimationTwo } = this.state;
+    const { edited, savedGames } = this.props;
+    const hasSavedGames = Object.keys(savedGames).length > 0;
     const animationSavedGameButtonDelay = !edited
       ? BUTTON_2_ANIMATION_DELAY
-      : BUTTON_3_ANIMATION_DELAY
+      : BUTTON_3_ANIMATION_DELAY;
     const animationExitButtonDelay =
       edited && hasSavedGames
         ? BUTTON_4_ANIMATION_DELAY
         : !edited && !hasSavedGames
-          ? BUTTON_2_ANIMATION_DELAY
-          : BUTTON_3_ANIMATION_DELAY
+        ? BUTTON_2_ANIMATION_DELAY
+        : BUTTON_3_ANIMATION_DELAY;
     return (
-      <View style={ styles.container }>
+      <View style={styles.container}>
         <Image
-          source={ require('./../assets/images/cards_dices.png') }
-          style={ [
-            StyleSheet.absoluteFill,
-            styles.backgroundImage,
-          ] }
+          source={require('../../assets/images/cards_dices.png')}
+          style={[StyleSheet.absoluteFill, styles.backgroundImage]}
           resizeMode="cover"
         />
         <Animated.View
-          style={ {
+          style={{
             ...styles.titleContainer,
             transform: [{ translateY: bringMenusAnimationOne }],
-          } }>
-          <Text style={ styles.title }>MULTIBOARD</Text>
+          }}>
+          <Text style={styles.title}>MULTIBOARD</Text>
         </Animated.View>
         <Animated.View
-          style={ {
+          style={{
             ...styles.menuContainer,
             transform: [{ translateY: bringMenusAnimationTwo }],
-          } }>
-          <Text style={ styles.header }>Main Menu</Text>
-          <View style={ styles.body }>
+          }}>
+          <Text style={styles.header}>Main Menu</Text>
+          <View style={styles.body}>
             <AnimatedButton
-              onPress={ this.startNewGame }
-              delay={ BUTTON_1_ANIMATION_DELAY }
+              onPress={this.startNewGame}
+              delay={BUTTON_1_ANIMATION_DELAY}
               text="New Game"
-              width={ 250 }
+              width={250}
             />
-            { edited &&
+            {edited && (
               <AnimatedButton
-                onPress={ this.continueGame }
-                delay={ BUTTON_2_ANIMATION_DELAY }
+                onPress={this.continueGame}
+                delay={BUTTON_2_ANIMATION_DELAY}
                 text="Continue game"
-                width={ 250 }
+                width={250}
               />
-            }
-            { savedGames.length > 0 && (
+            )}
+            {hasSavedGames && (
               <AnimatedButton
-                onPress={ this.savedGames }
-                delay={ animationSavedGameButtonDelay }
+                onPress={this.savedGames}
+                delay={animationSavedGameButtonDelay}
                 text="Saved Games"
-                width={ 250 }
+                width={250}
               />
-            ) }
+            )}
             <AnimatedButton
-              onPress={ this.exitGame }
-              delay={ animationExitButtonDelay }
+              onPress={this.exitGame}
+              delay={animationExitButtonDelay}
               text="Exit"
-              width={ 250 }
+              width={250}
             />
           </View>
         </Animated.View>
         <Alert
-          show={ this.state.showGameInProgressAlert }
-          showProgress={ false }
+          show={this.state.showGameInProgressAlert}
+          showProgress={false}
           title="Unsaved game"
           message="There is a game in progress. Do you want to start a new game anyway?"
-          showCancelButton={ true }
-          showConfirmButton={ true }
+          showCancelButton={true}
+          showConfirmButton={true}
           cancelText="No"
           confirmText="Yes"
-          onCancelPressed={ () => {
-            this.hideGameInProgressAlert()
-          } }
-          onConfirmPressed={ () => {
-            this.hideGameInProgressAlert()
+          onCancelPressed={() => {
+            this.hideGameInProgressAlert();
+          }}
+          onConfirmPressed={() => {
+            this.hideGameInProgressAlert();
             // this.props.navigation.navigate(NewGameSettings);
-          } }
+          }}
         />
       </View>
-    )
+    );
   }
 }
 
@@ -232,6 +224,4 @@ const styles = StyleSheet.create({
     marginRight: 15,
     backgroundColor: '#222',
   },
-})
-
-export default MainMenu
+});
