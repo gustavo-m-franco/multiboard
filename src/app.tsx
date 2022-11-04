@@ -6,9 +6,6 @@ import { store } from './get-store';
 
 const App: React.FC = () => {
   return (
-
-
-
     <Provider store={store}>
       <Navigation />
     </Provider>

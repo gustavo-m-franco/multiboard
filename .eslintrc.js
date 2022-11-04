@@ -36,6 +36,7 @@ module.exports = {
         allowTypedFunctionExpressions: false,
       },
     ],
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     '@typescript-eslint/strict-boolean-expressions': 'off',
     '@typescript-eslint/no-floating-promises': 'off',
     '@typescript-eslint/no-unused-vars': 'error',
