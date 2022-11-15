@@ -1,5 +1,4 @@
 import { AppState } from '../../get-store';
-import { MainMenuState } from './main-menu-reducer';
+import { GamesState } from './games-reducer';
 
-export const mainMenuSelector = (state: AppState): MainMenuState =>
-  state.mainMenu;
+export const mainMenuSelector = (state: AppState): GamesState => state.games;

@@ -6,20 +6,17 @@ import { WinLoseControl } from './win-lose-control';
 interface WinLoseSettingProps {
   description: string;
   isMaxScoreWins: boolean;
-  showWinLoseOptions: () => void;
+  onChange: (isMaxScoreWins: boolean) => void;
 }
 
 export const WinLoseSetting: React.FC<WinLoseSettingProps> = ({
   description,
   isMaxScoreWins,
-  showWinLoseOptions,
+  onChange,
 }) => (
   <View style={styles.setting}>
     <SettingDescriptionLabel text={description} />
-    <WinLoseControl
-      maxScoreWins={isMaxScoreWins}
-      showWinLoseOptions={showWinLoseOptions}
-    />
+    <WinLoseControl isMaxScoreWins={isMaxScoreWins} onPress={onChange} />
   </View>
 );
 

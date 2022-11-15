@@ -1,9 +1,9 @@
 import flipper from 'redux-flipper';
 import { configureStore, combineReducers, Middleware } from '@reduxjs/toolkit';
 import {
-  mainMenuReducer as mainMenu,
-  MainMenuState,
-} from './screens/main-menu/main-menu-reducer';
+  gamesReducer as mainMenu,
+  GamesState,
+} from './screens/main-menu/games-reducer';
 import { gameReducer as game, GameState } from './screens/game/game-reducer';
 import {
   playersReducer as players,
@@ -49,13 +49,13 @@ if (__DEV__) {
 // }
 
 export interface AppState {
-  mainMenu: MainMenuState;
+  games: GamesState;
   game: GameState;
   players: PlayersState;
   stopwatch: StopwatchState;
 }
 const reducer = combineReducers<AppState>({
-  mainMenu,
+  games: mainMenu,
   game,
   players,
   stopwatch,

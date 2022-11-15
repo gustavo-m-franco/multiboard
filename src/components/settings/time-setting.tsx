@@ -3,12 +3,13 @@ import { StyleSheet, Text, View, Switch } from 'react-native';
 
 interface TimeSettingProps {
   description: string;
-  updateTimedGame: (timed: boolean) => void;
+  onChange: (timed: boolean) => void;
   timed: boolean;
 }
 
+// TODO deprecated props
 export const TimeSetting: React.FC<TimeSettingProps> = props => {
-  const updateTimedGame = (): void => props.updateTimedGame(!props.timed);
+  const onChange = (): void => props.onChange(!props.timed);
   return (
     <View style={styles.setting}>
       <View style={styles.labelContainer}>
@@ -20,7 +21,7 @@ export const TimeSetting: React.FC<TimeSettingProps> = props => {
             thumbTintColor={props.timed ? '#FFF' : '#999'}
             tintColor="#444"
             value={props.timed}
-            onValueChange={updateTimedGame}
+            onValueChange={onChange}
           />
         </View>
       </View>

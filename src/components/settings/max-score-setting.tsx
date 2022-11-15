@@ -6,16 +6,13 @@ import { MaxScoreControl } from './max-score-control';
 interface MaxScoreSettingProps {
   description: string;
   maxScore: number;
-  updateMaxScore: (maxScore: number) => void;
+  onChange: (maxScore: number) => void;
 }
 
 export const MaxScoreSetting: React.FC<MaxScoreSettingProps> = props => (
   <View style={styles.setting}>
     <SettingDescriptionLabel text={props.description} />
-    <MaxScoreControl
-      maxScore={props.maxScore}
-      updateMaxScore={props.updateMaxScore}
-    />
+    <MaxScoreControl maxScore={props.maxScore} onChange={props.onChange} />
   </View>
 );
 

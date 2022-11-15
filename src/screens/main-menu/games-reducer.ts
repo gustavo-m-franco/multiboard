@@ -5,58 +5,47 @@ import { PayloadAction } from '@reduxjs/toolkit/src/createAction';
 import { gameActions, GameState } from '../game/game-reducer';
 import { PlayersState } from '../players/players-reducer';
 import { StopwatchState } from '../stopwatch/stopwatch-reducer';
+import uuid from 'react-native-uuid';
 
 interface SavedGame {
   gameSettings: GameState;
-  players: PlayersState;
-  stopwatch: StopwatchState;
+  players?: PlayersState;
+  stopwatch?: StopwatchState;
 }
 
 export interface SavedGames {
   [key: string]: SavedGame;
 }
 
-export interface MainMenuState {
-  isMaxScoreWins: boolean;
-  maxScore: number;
+export interface GamesState {
   activeGame?: string;
   savedGames: SavedGames;
-  timed: boolean;
-  time: string;
-  edited: boolean;
 }
 
-const initialState: MainMenuState = {
-  isMaxScoreWins: true,
-  maxScore: 10,
+const initialState: GamesState = {
   activeGame: undefined,
   savedGames: {},
-  timed: false,
-  time: '01:00',
-  edited: false,
 };
 
-interface MainMenuCaseReducers extends SliceCaseReducers<MainMenuState> {
-  updateGameWinOrLose: CaseReducer<MainMenuState, PayloadAction<boolean>>;
-  updateGameMaxScore: CaseReducer<MainMenuState, PayloadAction<number>>;
-  saveGame: CaseReducer<MainMenuState, PayloadAction<SavedGame>>;
-  updateSavedGame: CaseReducer<MainMenuState, PayloadAction<SavedGame>>;
-  removeGame: CaseReducer<MainMenuState, PayloadAction<string>>;
-  updateTimedGame: CaseReducer<MainMenuState, PayloadAction<boolean>>;
-  updateGameTimeLimit: CaseReducer<MainMenuState, PayloadAction<string>>;
+interface GamesCaseReducers extends SliceCaseReducers<GamesState> {
+  startNewGame: CaseReducer<GamesState, PayloadAction<GameState>>;
+  saveGame: CaseReducer<GamesState, PayloadAction<SavedGame>>;
+  updateSavedGame: CaseReducer<GamesState, PayloadAction<SavedGame>>;
+  removeGame: CaseReducer<GamesState, PayloadAction<string>>;
 }
 
-const mainMenuSlice = createSlice<MainMenuState, MainMenuCaseReducers>({
-  name: 'mainMenu',
+const gamesSlice = createSlice<GamesState, GamesCaseReducers>({
+  name: 'games',
   initialState,
   reducers: {
-    updateGameWinOrLose: (state, { payload: isMaxScoreWins }) => ({
+    startNewGame: (state, { payload: gameSettings }) => ({
       ...state,
-      isMaxScoreWins,
-    }),
-    updateGameMaxScore: (state, { payload: maxScore }) => ({
-      ...state,
-      maxScore,
+      savedGames: {
+        ...state.savedGames,
+        [uuid.v4() as string]: {
+          gameSettings,
+        },
+      },
     }),
     saveGame: (state, { payload: savedGame }) =>
       savedGame.gameSettings.id
@@ -86,14 +75,6 @@ const mainMenuSlice = createSlice<MainMenuState, MainMenuCaseReducers>({
         savedGames,
       };
     },
-    updateTimedGame: (state, { payload: timed }) => ({
-      ...state,
-      timed,
-    }),
-    updateGameTimeLimit: (state, { payload: time }) => ({
-      ...state,
-      time,
-    }),
   },
   extraReducers: builder => {
     builder.addCase(gameActions.loadGame, (state, { payload: { game } }) => ({
@@ -102,5 +83,5 @@ const mainMenuSlice = createSlice<MainMenuState, MainMenuCaseReducers>({
     }));
   },
 });
-export const mainMenuReducer = mainMenuSlice.reducer;
-export const mainMenuActions = mainMenuSlice.actions;
+export const gamesReducer = gamesSlice.reducer;
+export const gamesActions = gamesSlice.actions;

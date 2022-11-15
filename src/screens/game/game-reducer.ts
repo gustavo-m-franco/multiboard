@@ -14,32 +14,31 @@ enum GameStatus {
 }
 
 export interface GameState {
-  id?: string;
-  selectedPlayer: number;
+  id: string;
+  selectedPlayer?: number;
   isMaxScoreWins: boolean;
   maxScore: number;
-  displayStats: boolean;
+  displayStats?: boolean;
   gameStatus: GameStatus;
   gameName: string;
-  edited: boolean;
+  edited?: boolean;
   lastSaved?: number;
   timed: boolean;
+  time: string;
 }
 
-const initialState: GameState = {
-  id: undefined,
-  selectedPlayer: -1,
+export const initialState: GameState = {
+  id: '',
   isMaxScoreWins: true,
   maxScore: 0,
-  displayStats: false,
   gameStatus: GameStatus.IN_COURSE,
   gameName: '',
-  edited: false,
-  lastSaved: undefined,
   timed: false,
+  time: '01:00',
 };
 
-export interface StartNewGamePayload {
+export interface StartNewGamePayload extends GameState {
+  gameName: string;
   isMaxScoreWins: boolean;
   maxScore: number;
   timed: boolean;
@@ -95,10 +94,11 @@ const gameSlice = createSlice<GameState, GameCaseReducers>({
     }),
     startNewGame: (
       state,
-      { payload: { isMaxScoreWins, maxScore, timed } },
+      { payload: { gameName, isMaxScoreWins, maxScore, timed } },
     ) => ({
       ...initialState,
       id: uuid.v4() as string,
+      gameName,
       isMaxScoreWins,
       maxScore,
       timed,

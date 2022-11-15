@@ -11,7 +11,7 @@ import {
 import React, { Component } from 'react';
 import { AnimatedButton } from '../../components/button/animated-button';
 import { Alert } from '../alert';
-import { SavedGames } from './main-menu-reducer';
+import { SavedGames } from './games-reducer';
 
 interface MainMenuProps {
   navigation: NativeStackNavigationProp<RootStackParamList>;

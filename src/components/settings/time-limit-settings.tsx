@@ -1,28 +1,29 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { SettingDescriptionLabel } from './setting-description-label';
 import { TimeLimitControl } from './time-limit-control';
+import { FieldError } from 'react-hook-form';
 
 interface TimeLimitSettingsProps {
   description: string;
-  updateTimeLimit: (time: string) => void;
-  timed: boolean;
+  onChange: (time: string) => void;
   time: string;
-  showWrongTimeMessage: () => void;
+  error?: FieldError;
 }
 
-export const TimeLimitSettings: React.FC<TimeLimitSettingsProps> = props => {
-  return (
-    <View style={styles.setting}>
-      <SettingDescriptionLabel text={props.description} />
-      <TimeLimitControl
-        time={props.time}
-        updateTimeLimit={props.updateTimeLimit}
-        showWrongTimeMessage={props.showWrongTimeMessage}
-      />
-    </View>
-  );
-};
+// TODO error
+export const TimeLimitSettings: React.FC<TimeLimitSettingsProps> = ({
+  description,
+  onChange,
+  time,
+  error,
+}) => (
+  <View style={styles.setting}>
+    <SettingDescriptionLabel text={description} />
+    <TimeLimitControl time={time} updateTimeLimit={onChange} />
+    {error?.message && <Text style={styles.error}>{error?.message}</Text>}
+  </View>
+);
 
 const styles = StyleSheet.create({
   setting: {
@@ -30,5 +31,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#333',
     borderBottomColor: '#444',
     borderBottomWidth: 2,
+  },
+  error: {
+    color: '#F66',
+    textAlign: 'center',
+    fontSize: 12,
   },
 });

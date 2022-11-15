@@ -11,7 +11,6 @@ import { Icon } from '@rneui/themed';
 interface TimeLimitControlProps {
   time: string;
   updateTimeLimit: (time: string) => void;
-  showWrongTimeMessage: () => void;
 }
 
 interface TimeLimitControlState {
@@ -70,7 +69,6 @@ export class TimeLimitControl extends Component<
       this.props.updateTimeLimit(this.state.time);
     } else {
       this.setState({ time: this.props.time });
-      this.props.showWrongTimeMessage();
     }
   };
 
@@ -79,9 +77,15 @@ export class TimeLimitControl extends Component<
     this.updateTime();
   };
 
-  onFocus = () => {
-    this.inputRef?.focus();
-    this.setState({ editing: true });
+  onPress = () => {
+    const { editing } = this.state;
+    this.setState({ editing: !editing }, () => {
+      if (!editing) {
+        this.inputRef?.focus();
+      } else {
+        this.inputRef?.blur();
+      }
+    });
   };
 
   render(): React.ReactNode {
@@ -95,16 +99,16 @@ export class TimeLimitControl extends Component<
             keyboardType="numeric"
             style={styles.value}
             value={this.state.time.toString()}
-            onChangeText={text => this.onChanged(text)}
+            onChangeText={this.onChanged}
             onSubmitEditing={this.updateTime}
             onKeyPress={() => {
               if (Platform.OS === 'ios') this.setState({ time: '...' });
             }}
             onBlur={this.onBlur}
-            onFocus={this.onFocus}
+            onFocus={this.onPress}
             underlineColorAndroid="rgba(0,0,0,0)"
           />
-          <TouchableOpacity style={styles.edit} onPress={this.onFocus}>
+          <TouchableOpacity style={styles.edit} onPress={this.onPress}>
             <Icon
               name={this.state.editing ? 'done' : 'edit'}
               size={20}

@@ -1,9 +1,14 @@
 import React from 'react';
-import { NavigationContainer, ParamListBase } from '@react-navigation/native';
+import {
+  NavigationContainer,
+  ParamListBase,
+  useNavigationContainerRef,
+} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { MainMenuScreen } from './main-menu/main-menu-screen';
 import { NewGameScreen } from './new-game/new-game-screen';
+import { useFlipper } from '@react-navigation/devtools';
 
 export enum Screens {
   MainMenu = 'MainMenu',
@@ -12,21 +17,17 @@ export enum Screens {
 
 export interface RootStackParamList extends ParamListBase {
   MainMenu: undefined;
-  SecondaryScreen: {
-    activeGame?: unknown;
-    maxScore: number;
-    maxScoreWins: boolean;
-    savedGames: unknown[];
-    edited: boolean;
-  };
   NewGame: undefined;
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const Navigation: React.FC = () => {
+  const navigationRef = useNavigationContainerRef();
+
+  useFlipper(navigationRef);
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
         initialRouteName={Screens.MainMenu}
         screenOptions={{ headerShown: false }}>

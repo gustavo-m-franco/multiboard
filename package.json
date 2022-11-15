@@ -11,12 +11,14 @@
     "lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@react-navigation/devtools": "^6.0.10",
     "@react-navigation/native": "^6.0.13",
     "@react-navigation/native-stack": "^6.9.1",
     "@reduxjs/toolkit": "^1.8.6",
     "@rneui/base": "^0.0.0-edge.2",
     "@rneui/themed": "^0.0.0-edge.2",
     "react": "18.1.0",
+    "react-hook-form": "^7.39.1",
     "react-native": "0.70.3",
     "react-native-awesome-alerts": "^2.0.0",
     "react-native-keyboard-aware-scrollview": "^2.1.0",

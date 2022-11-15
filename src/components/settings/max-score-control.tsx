@@ -10,7 +10,7 @@ import {
 
 interface MaxScoreControlProps {
   maxScore: number;
-  updateMaxScore: (maxScore: number) => void;
+  onChange: (maxScore: number) => void;
 }
 
 interface MaxScoreControlState {
@@ -41,7 +41,7 @@ export class MaxScoreControl extends Component<
   };
 
   addToMaxScore = (delta: number) => {
-    this.props.updateMaxScore(this.props.maxScore + delta);
+    this.props.onChange(this.props.maxScore + delta);
     this.setState({ newScore: (+this.state.newScore + delta).toString() });
   };
 
@@ -54,16 +54,15 @@ export class MaxScoreControl extends Component<
   };
 
   updateMaxScore = () => {
-    this.props.updateMaxScore(Number(this.state.newScore));
+    this.props.onChange(Number(this.state.newScore));
   };
 
   onPress = () => Number(this.state.newScore) > 1 && this.addToMaxScore(-1);
 
   onBlur = () =>
-    this.state.newScore &&
-    this.props.updateMaxScore(Number(this.state.newScore));
+    this.state.newScore && this.props.onChange(Number(this.state.newScore));
 
-  render(): void {
+  render(): React.ReactNode {
     return (
       <View style={styles.counter}>
         <TouchableOpacity

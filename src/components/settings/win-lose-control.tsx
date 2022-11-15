@@ -3,20 +3,24 @@ import { Icon } from '@rneui/themed';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 interface WinLoseControlProps {
-  maxScoreWins: boolean;
-  showWinLoseOptions: () => void;
+  isMaxScoreWins: boolean;
+  onPress: (isMaxScoreWins: boolean) => void;
+}
+
+enum MaxScoreMeaning {
+  WIN = 'WINS',
+  LOSE = 'LOSES',
 }
 
 export const WinLoseControl: React.FC<WinLoseControlProps> = props => {
+  const onPress = () => props.onPress(!props.isMaxScoreWins);
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
-        <Text onPress={props.showWinLoseOptions} style={styles.value}>
-          {props.maxScoreWins ? 'WIN' : 'LOSE'}
+        <Text onPress={onPress} style={styles.value}>
+          {props.isMaxScoreWins ? MaxScoreMeaning.WIN : MaxScoreMeaning.LOSE}
         </Text>
-        <TouchableOpacity
-          style={styles.edit}
-          onPress={props.showWinLoseOptions}>
+        <TouchableOpacity style={styles.edit} onPress={onPress}>
           <Icon size={20} name="edit" color="#FFF" />
         </TouchableOpacity>
       </View>

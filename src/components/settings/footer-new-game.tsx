@@ -32,18 +32,20 @@ export const FooterNewGame: React.FC<FooterNewGameProps> = ({
     // props.navigation.navigate(Screens.Scoreboard);
   };
 
+  const handleOnBackPress = () => {
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.footer}>
       <AnimatedButton
         onPress={onStartNewGame}
         text="Start"
         width={150}
-        delay={1000}
+        delay={700}
       />
       <AnimatedButton
-        onPress={() => {
-          navigation.goBack();
-        }}
+        onPress={handleOnBackPress}
         text="Back to menu"
         width={150}
         delay={1000}
