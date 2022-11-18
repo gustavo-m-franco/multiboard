@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon } from '@rneui/themed';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-interface WinLoseControlProps {
+interface WinLoseInputProps {
   isMaxScoreWins: boolean;
   onPress: (isMaxScoreWins: boolean) => void;
 }
@@ -12,7 +12,7 @@ enum MaxScoreMeaning {
   LOSE = 'LOSES',
 }
 
-export const WinLoseControl: React.FC<WinLoseControlProps> = props => {
+export const WinLoseInput: React.FC<WinLoseInputProps> = props => {
   const onPress = () => props.onPress(!props.isMaxScoreWins);
   return (
     <View style={styles.container}>

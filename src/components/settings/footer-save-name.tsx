@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack/lib/typescript/src/types';
-import { RootStackParamList } from '../../screens/navigation';
+import { RootStackParamList } from '../../screens/navigation/navigation-types';
 import { AnimatedButton } from '../button/animated-button';
 
 interface FooterSaveGameProps {

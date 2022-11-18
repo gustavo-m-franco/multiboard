@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { GameNameInput } from './game-name-input';
-import { trimName } from '../../utility/format';
+import { trimName } from '../../../utility/format';
 import { GameNameLabel } from './game-name-label';
 import { FieldError } from 'react-hook-form';
 

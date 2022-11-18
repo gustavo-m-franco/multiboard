@@ -1,5 +1,5 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack/lib/typescript/src/types';
-import { RootStackParamList, Screens } from '../navigation';
+import { RootStackParamList, Screens } from '../navigation/navigation-types';
 import {
   Animated,
   BackHandler,
@@ -16,10 +16,8 @@ import { SavedGames } from './games-reducer';
 interface MainMenuProps {
   navigation: NativeStackNavigationProp<RootStackParamList>;
   activeGame?: unknown;
-  maxScore: number;
-  maxScoreWins: boolean;
   savedGames: SavedGames;
-  edited: boolean;
+  edited?: boolean;
 }
 
 interface MainMenuState {

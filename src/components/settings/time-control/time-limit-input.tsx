@@ -18,7 +18,7 @@ interface TimeLimitControlState {
   editing: boolean;
 }
 
-export class TimeLimitControl extends Component<
+export class TimeLimitInput extends Component<
   TimeLimitControlProps,
   TimeLimitControlState
 > {

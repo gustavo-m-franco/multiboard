@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Icon } from '@rneui/themed';
+import { ControlContainer } from '../control/control-container';
 
 interface GameNameLabelProps {
   name: string;
@@ -10,26 +11,17 @@ export const GameNameLabel: React.FC<GameNameLabelProps> = ({
   name,
   editGame,
 }) => (
-  <View style={styles.savedGameContainer}>
+  <ControlContainer>
     <View style={styles.editGameNameContainer}>
       <Text style={styles.savedGameName}>{name}</Text>
       <TouchableOpacity onPress={editGame}>
         <Icon name="edit" size={20} color="#fff" />
       </TouchableOpacity>
     </View>
-  </View>
+  </ControlContainer>
 );
 
 const styles = StyleSheet.create({
-  savedGameContainer: {
-    backgroundColor: '#333',
-    borderBottomColor: '#444',
-    borderBottomWidth: 2,
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    justifyContent: 'center',
-    padding: 10,
-  },
   editGameNameContainer: {
     flexDirection: 'row',
     justifyContent: 'center',

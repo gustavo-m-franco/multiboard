@@ -1,20 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text, View, Switch } from 'react-native';
+import { StyleSheet, View, Switch } from 'react-native';
+import { ControlInputWrapper } from './control/control-input-wrapper';
 
-interface TimeSettingProps {
+interface TimedControlProps {
   description: string;
   onChange: (timed: boolean) => void;
   timed: boolean;
 }
 
 // TODO deprecated props
-export const TimeSetting: React.FC<TimeSettingProps> = props => {
+export const TimedControl: React.FC<TimedControlProps> = props => {
   const onChange = (): void => props.onChange(!props.timed);
   return (
-    <View style={styles.setting}>
-      <View style={styles.labelContainer}>
-        <Text style={styles.label}>{props.description}</Text>
-      </View>
+    <ControlInputWrapper description={props.description}>
       <View style={styles.switchContainer}>
         <View style={styles.switchComponent}>
           <Switch
@@ -25,31 +23,11 @@ export const TimeSetting: React.FC<TimeSettingProps> = props => {
           />
         </View>
       </View>
-    </View>
+    </ControlInputWrapper>
   );
 };
 
 const styles = StyleSheet.create({
-  setting: {
-    flexDirection: 'row',
-    backgroundColor: '#333',
-    borderBottomColor: '#444',
-    borderBottomWidth: 2,
-  },
-  labelContainer: {
-    flex: 3,
-    flexDirection: 'row',
-  },
-  label: {
-    flex: 3,
-    textAlign: 'center',
-    color: '#fff',
-    paddingTop: 18,
-    paddingBottom: 18,
-    paddingLeft: 5,
-    paddingRight: 5,
-    fontWeight: '900',
-  },
   switchContainer: {
     flex: 2,
     flexDirection: 'column',

@@ -18,6 +18,7 @@ export interface SavedGames {
 }
 
 export interface GamesState {
+  edited?: boolean;
   activeGame?: string;
   savedGames: SavedGames;
 }

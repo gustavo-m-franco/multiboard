@@ -30,7 +30,7 @@ export interface GameState {
 export const initialState: GameState = {
   id: '',
   isMaxScoreWins: true,
-  maxScore: 0,
+  maxScore: 10,
   gameStatus: GameStatus.IN_COURSE,
   gameName: '',
   timed: false,

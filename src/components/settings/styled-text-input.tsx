@@ -1,58 +1,53 @@
 import React from 'react';
-import { StyleSheet, TextInput, Text, View } from 'react-native';
+import { StyleSheet, TextInput, Text } from 'react-native';
 
 interface GameNameInputProps {
-  name?: string;
+  value?: string;
   onChangeText: (name: string) => void;
   onBlur: () => void;
   error?: string;
+  placeholder: string;
 }
 
-export const GameNameInput: React.FC<GameNameInputProps> = ({
-  name,
+export const StyledTextInput: React.FC<GameNameInputProps> = ({
+  value,
+  placeholder,
   onChangeText,
   onBlur,
   error,
 }) => (
-  <View style={styles.saveGameContainer}>
+  <>
     <TextInput
       onBlur={onBlur}
-      value={name}
+      value={value}
       style={[styles.saveGameName, error ? styles.onError : undefined]}
-      placeholder="Game name"
+      placeholder={placeholder}
       placeholderTextColor="#999"
       onChangeText={onChangeText}
       underlineColorAndroid="rgba(0,0,0,0)"
     />
     {error && <Text style={styles.error}>{error}</Text>}
-  </View>
+  </>
 );
 
 const styles = StyleSheet.create({
-  saveGameContainer: {
-    backgroundColor: '#333',
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    borderBottomColor: '#444',
-    borderBottomWidth: 2,
-    height: 64,
-  },
   saveGameName: {
     height: 44,
     flex: 1,
     fontSize: 15,
     textAlign: 'center',
     backgroundColor: '#222',
-    margin: 10,
-    marginBottom: 12,
-    borderRadius: 10,
+    margin: 12,
+    borderRadius: 12,
     color: '#fff',
     letterSpacing: 2,
   },
   onError: {
-    marginBottom: 0,
+    marginBottom: 2,
   },
   error: {
+    marginTop: -4,
+    marginBottom: 0,
     color: '#F66',
     textAlign: 'center',
     fontSize: 12,

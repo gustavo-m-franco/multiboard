@@ -18,7 +18,7 @@ interface MaxScoreControlState {
   newScoreRefresh: number;
 }
 
-export class MaxScoreControl extends Component<
+export class MaxScoreInput extends Component<
   MaxScoreControlProps,
   MaxScoreControlState
 > {

@@ -1,38 +1,44 @@
 import { connect, MapStateToProps } from 'react-redux';
 import { AppState } from '../../get-store';
-import { GameSettings } from '../../components/game-settings';
+import { GameSettingsForm } from '../../components/game-settings-form';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList, Screens } from '../navigation';
-import { gameActions } from '../game/game-reducer';
+import { gameActions, GameState, initialState } from '../game/game-reducer';
+import { RootStackParamList, Screens } from '../navigation/navigation-types';
 
 type NewGameScreenProps = NativeStackScreenProps<
   RootStackParamList,
   Screens.NewGame
 >;
 
-const mapStateToProps: MapStateToProps<{}, NewGameScreenProps, AppState> = (
-  state,
-  ownProps,
-) => ({
+interface DefaultValuesProps {
+  defaultValues: GameState;
+}
+
+const mapStateToProps: MapStateToProps<
+  DefaultValuesProps,
+  NewGameScreenProps,
+  AppState
+> = (state, ownProps) => ({
   ...ownProps,
+  defaultValues: initialState,
 });
 
 const { startNewGame } = gameActions;
 
 interface MapDispatchToProps {
-  startNewGame: typeof startNewGame;
+  save: typeof startNewGame;
 }
 
 const mapDispatchToProps: MapDispatchToProps = {
-  startNewGame,
+  save: startNewGame,
 };
 
 export const NewGameScreen = connect<
-  {},
+  DefaultValuesProps,
   MapDispatchToProps,
   NewGameScreenProps,
   AppState
 >(
   mapStateToProps,
   mapDispatchToProps,
-)(GameSettings);
+)(GameSettingsForm);

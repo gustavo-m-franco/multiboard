@@ -5,38 +5,39 @@ import { StyleSheet, View, ImageBackground } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { useForm, Controller } from 'react-hook-form';
 
-import { TimeLimitSettings } from './settings/time-limit-settings';
-import {
-  GameState,
-  initialState,
-  StartNewGamePayload,
-} from '../screens/game/game-reducer';
+import { TimeLimitControl } from './settings/time-control/time-limit-control';
+import { GameState, StartNewGamePayload } from '../screens/game/game-reducer';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack/lib/typescript/src/types';
 import type { RouteProp } from '@react-navigation/native';
-import { RootStackParamList, Screens } from '../screens/navigation';
+import { RootStackParamList } from '../screens/navigation/navigation-types';
 import { BringFromBottom } from './animation/bring-from-bottom';
-import { WinLoseSetting } from './settings/win-lose-seeting';
-import { MaxScoreSetting } from './settings/max-score-setting';
-import { TimeSetting } from './settings/time-setting';
+import { WinLoseControl } from './settings/win-lose-control/win-lose-control';
+import { MaxScoreControl } from './settings/max-score-control/max-score-control';
+import { TimedControl } from './settings/timedControl';
 import { Alert } from '../screens/alert';
-import { GameNameControl } from './settings/game-name-control';
-import { FooterSaveGame } from './settings/footer-saved-name';
+import { GameNameControl } from './settings/game-name-control/game-name-control';
+import { FooterSaveGame } from './settings/footer-save-name';
 
 const NAME_MAX_LENGTH = 10;
+
+enum GameSettingsField {
+  GAME_NAME = 'gameName',
+  IS_MAX_SCORE_WINS = 'isMaxScoreWins',
+  MAX_SCORE = 'maxScore',
+  TIMED = 'timed',
+  TIME = 'time',
+}
 
 interface GamesSettingsProps {
   route: RouteProp<RootStackParamList>;
   navigation: NativeStackNavigationProp<RootStackParamList>;
-  currentGameDetails?: GameState;
-  saveProgress?: (gameData: StartNewGamePayload) => void;
-  startNewGame?: (newGameDetails: StartNewGamePayload) => void;
+  defaultValues: GameState;
+  save: (newGameDetails: StartNewGamePayload) => void;
 }
 
-export const GameSettings: React.FC<GamesSettingsProps> = ({
-  route,
-  currentGameDetails,
-  startNewGame,
-  saveProgress,
+export const GameSettingsForm: React.FC<GamesSettingsProps> = ({
+  defaultValues,
+  save,
   navigation,
 }) => {
   // TODO use alert or remove it
@@ -71,11 +72,6 @@ export const GameSettings: React.FC<GamesSettingsProps> = ({
   // };
   // };
 
-  const isNewGame = route.name === Screens.NewGame;
-  const defaultValues: GameState = isNewGame
-    ? initialState
-    : currentGameDetails ?? initialState;
-
   const {
     control,
     handleSubmit,
@@ -87,9 +83,6 @@ export const GameSettings: React.FC<GamesSettingsProps> = ({
 
   const watchTimed = watch('timed');
   const watchIsMaxScoreWins = watch('isMaxScoreWins');
-  const onSubmit = (data: StartNewGamePayload) => {
-    isNewGame ? startNewGame?.(data) : saveProgress?.(data);
-  };
 
   const onHideMessage = () => {
     setMessageText(undefined);
@@ -110,7 +103,7 @@ export const GameSettings: React.FC<GamesSettingsProps> = ({
             <View style={styles.header} />
             <View>
               <Controller
-                name="gameName"
+                name={GameSettingsField.GAME_NAME}
                 control={control}
                 rules={{
                   required: { value: true, message: 'You must provide a name' },
@@ -129,10 +122,10 @@ export const GameSettings: React.FC<GamesSettingsProps> = ({
                 )}
               />
               <Controller
-                name="isMaxScoreWins"
+                name={GameSettingsField.IS_MAX_SCORE_WINS}
                 control={control}
                 render={({ field: { onChange, value } }) => (
-                  <WinLoseSetting
+                  <WinLoseControl
                     description="Top score:"
                     isMaxScoreWins={value}
                     onChange={onChange}
@@ -140,10 +133,10 @@ export const GameSettings: React.FC<GamesSettingsProps> = ({
                 )}
               />
               <Controller
-                name="maxScore"
+                name={GameSettingsField.MAX_SCORE}
                 control={control}
                 render={({ field: { onChange, value } }) => (
-                  <MaxScoreSetting
+                  <MaxScoreControl
                     description={`Top score to ${
                       watchIsMaxScoreWins ? 'win:' : 'lose:'
                     }`}
@@ -153,10 +146,10 @@ export const GameSettings: React.FC<GamesSettingsProps> = ({
                 )}
               />
               <Controller
-                name="timed"
+                name={GameSettingsField.TIMED}
                 control={control}
                 render={({ field: { onChange, value } }) => (
-                  <TimeSetting
+                  <TimedControl
                     description={'Timed game:'}
                     timed={value}
                     onChange={onChange}
@@ -166,10 +159,10 @@ export const GameSettings: React.FC<GamesSettingsProps> = ({
 
               {watchTimed && (
                 <Controller
-                  name="time"
+                  name={GameSettingsField.TIME}
                   control={control}
                   render={({ field: { onChange, value } }) => (
-                    <TimeLimitSettings
+                    <TimeLimitControl
                       description="Counter time (mm:ss):"
                       time={value}
                       onChange={onChange}
@@ -182,7 +175,7 @@ export const GameSettings: React.FC<GamesSettingsProps> = ({
             <FooterSaveGame
               navigation={navigation}
               isNewGame={true}
-              onSubmit={handleSubmit(onSubmit)}
+              onSubmit={handleSubmit(save)}
             />
           </View>
         </KeyboardAwareScrollView>

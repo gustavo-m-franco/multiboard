@@ -1,7 +1,7 @@
 import flipper from 'redux-flipper';
 import { configureStore, combineReducers, Middleware } from '@reduxjs/toolkit';
 import {
-  gamesReducer as mainMenu,
+  gamesReducer as games,
   GamesState,
 } from './screens/main-menu/games-reducer';
 import { gameReducer as game, GameState } from './screens/game/game-reducer';
@@ -20,7 +20,7 @@ import {
 // import createSagaMiddleware from 'redux-saga';
 // import { createReduxBoundAddListener, createReactNavigationReduxMiddleware, } from 'react-navigation-redux-helpers';
 // import { updatePlayersStatusSaga, updateGameStatusSaga, saveGameSaga, } from './sagas';
-// import { game, mainMenu, players, stopwatch,} from './reducers';
+// import { game, games, players, stopwatch,} from './reducers';
 // import nav from './reducers/nav';
 // import screenTracking from './utility/gaTracking';
 
@@ -55,7 +55,7 @@ export interface AppState {
   stopwatch: StopwatchState;
 }
 const reducer = combineReducers<AppState>({
-  games: mainMenu,
+  games,
   game,
   players,
   stopwatch,
