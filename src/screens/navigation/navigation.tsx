@@ -9,6 +9,7 @@ import { MainMenuScreen } from '../main-menu/main-menu-screen';
 import { NewGameScreen } from '../new-game/new-game-screen';
 import { useFlipper } from '@react-navigation/devtools';
 import { RootStackParamList, Screens } from './navigation-types';
+import { Scoreboard } from '../scoreboard/scoreboard';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -23,6 +24,7 @@ const Navigation: React.FC = () => {
         screenOptions={{ headerShown: false }}>
         <Stack.Screen name={Screens.MainMenu} component={MainMenuScreen} />
         <Stack.Screen name={Screens.NewGame} component={NewGameScreen} />
+        <Stack.Screen name={Screens.Scoreboard} component={Scoreboard} />
       </Stack.Navigator>
     </NavigationContainer>
   );

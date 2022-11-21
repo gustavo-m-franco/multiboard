@@ -9,7 +9,10 @@ import { TimeLimitControl } from './settings/time-control/time-limit-control';
 import { GameState, StartNewGamePayload } from '../screens/game/game-reducer';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack/lib/typescript/src/types';
 import type { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../screens/navigation/navigation-types';
+import {
+  RootStackParamList,
+  Screens,
+} from '../screens/navigation/navigation-types';
 import { BringFromBottom } from './animation/bring-from-bottom';
 import { WinLoseControl } from './settings/win-lose-control/win-lose-control';
 import { MaxScoreControl } from './settings/max-score-control/max-score-control';
@@ -81,11 +84,16 @@ export const GameSettingsForm: React.FC<GamesSettingsProps> = ({
     defaultValues,
   });
 
-  const watchTimed = watch('timed');
-  const watchIsMaxScoreWins = watch('isMaxScoreWins');
+  const watchTimed = watch(GameSettingsField.TIMED);
+  const watchIsMaxScoreWins = watch(GameSettingsField.IS_MAX_SCORE_WINS);
 
   const onHideMessage = () => {
     setMessageText(undefined);
+  };
+
+  const onSubmit = (data: StartNewGamePayload) => {
+    save(data);
+    navigation.navigate(Screens.Scoreboard);
   };
 
   // TODO Add error rules to max score
@@ -175,7 +183,7 @@ export const GameSettingsForm: React.FC<GamesSettingsProps> = ({
             <FooterSaveGame
               navigation={navigation}
               isNewGame={true}
-              onSubmit={handleSubmit(save)}
+              onSubmit={handleSubmit(onSubmit)}
             />
           </View>
         </KeyboardAwareScrollView>

@@ -3,10 +3,10 @@ import { CaseReducer } from '@reduxjs/toolkit/src/createReducer';
 import { PayloadAction } from '@reduxjs/toolkit/src/createAction';
 import { createSlice } from '@reduxjs/toolkit';
 import uuid from 'react-native-uuid';
-import { PlayersState } from '../players/players-reducer';
 import { StopwatchState } from '../stopwatch/stopwatch-reducer';
+import { PlayersState } from '../players/players-types';
 
-enum GameStatus {
+export enum GameStatus {
   ENDED = 'ENDED',
   IN_COURSE = 'IN_COURSE',
   STOPPED = 'STOPPED',
@@ -14,7 +14,6 @@ enum GameStatus {
 }
 
 export interface GameState {
-  id: string;
   selectedPlayer?: number;
   isMaxScoreWins: boolean;
   maxScore: number;
@@ -28,7 +27,6 @@ export interface GameState {
 }
 
 export const initialState: GameState = {
-  id: '',
   isMaxScoreWins: true,
   maxScore: 10,
   gameStatus: GameStatus.IN_COURSE,
@@ -63,6 +61,8 @@ interface GameCaseReducers extends SliceCaseReducers<GameState> {
   >;
 }
 
+// TODO remove unused actions
+// TODO remove generics
 const gameSlice = createSlice<GameState, GameCaseReducers>({
   name: 'game',
   initialState,

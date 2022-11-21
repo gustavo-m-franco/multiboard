@@ -1,56 +1,18 @@
-import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
-import { CaseReducer } from '@reduxjs/toolkit/src/createReducer';
-import { PayloadAction } from '@reduxjs/toolkit/src/createAction';
 import { createSlice } from '@reduxjs/toolkit';
 import uuid from 'react-native-uuid';
 import { gameActions } from '../game/game-reducer';
-
-export enum PlayerStatus {
-  PLAYING = 'PLAYING',
-  WON = 'WON',
-  LOST = 'LOST',
-}
-
-export interface Player {
-  id: string;
-  name: string;
-  score: number;
-  status: PlayerStatus;
-  created?: number;
-  updated?: number;
-  finished?: number;
-  elapsedTime?: number;
-}
-
-export interface PlayersState {
-  selectedPlayerId?: string;
-  edited: boolean;
-  players: { [key: string]: Player };
-}
+import {
+  PlayersCaseReducers,
+  PlayersState,
+  PlayerStatus,
+} from './players-types';
+import { playersStub } from './players-mock';
 
 export const initialState: PlayersState = {
-  selectedPlayerId: undefined,
+  selectedPlayerId: '3c92ce94-1663-46b4-a418-49d5a89e9ae5',
   edited: false,
-  players: {},
+  players: playersStub,
 };
-
-interface PlayersCaseReducers extends SliceCaseReducers<PlayersState> {
-  addPlayer: CaseReducer<PlayersState, PayloadAction<string>>;
-  removePlayer: CaseReducer<PlayersState, PayloadAction<string>>;
-  selectPlayer: CaseReducer<PlayersState, PayloadAction<string>>;
-  updatePlayerScore: CaseReducer<
-    PlayersState,
-    PayloadAction<{ id: string; delta: number }>
-  >;
-  updatePlayerStatus: CaseReducer<
-    PlayersState,
-    PayloadAction<{ id: string; status: PlayerStatus; elapsedTime: number }>
-  >;
-  updatePlayerElapsedTime: CaseReducer<
-    PlayersState,
-    PayloadAction<{ id: string; elapsedTime: number }>
-  >;
-}
 
 const playersSlice = createSlice<PlayersState, PlayersCaseReducers>({
   name: 'game',

@@ -5,14 +5,12 @@ import {
   GamesState,
 } from './screens/main-menu/games-reducer';
 import { gameReducer as game, GameState } from './screens/game/game-reducer';
-import {
-  playersReducer as players,
-  PlayersState,
-} from './screens/players/players-reducer';
+import { playersReducer as players } from './screens/players/players-reducer';
 import {
   stopwatchReducer as stopwatch,
   StopwatchState,
 } from './screens/stopwatch/stopwatch-reducer';
+import { PlayersState } from './screens/players/players-types';
 // import { persistStore, persistReducer, } from 'redux-persist'
 // import storage from 'redux-persist/lib/storage'
 // import { composeWithDevTools, } from 'redux-devtools-extension';

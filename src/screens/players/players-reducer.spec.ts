@@ -2,8 +2,8 @@ import {
   initialState,
   playersActions,
   playersReducer,
-  PlayerStatus,
 } from './players-reducer';
+import { PlayerStatus } from './players-types';
 
 const idContainer = { id: 'id-test-1' };
 

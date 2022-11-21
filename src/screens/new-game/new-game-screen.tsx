@@ -33,12 +33,7 @@ const mapDispatchToProps: MapDispatchToProps = {
   save: startNewGame,
 };
 
-export const NewGameScreen = connect<
-  DefaultValuesProps,
-  MapDispatchToProps,
-  NewGameScreenProps,
-  AppState
->(
+export const NewGameScreen = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(GameSettingsForm);

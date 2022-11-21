@@ -53,6 +53,14 @@ const stopwatchSlice = createSlice<StopwatchState, StopwatchCaseReducers>({
       gameActions.loadGame,
       (state, { payload: { stopwatch } }) => stopwatch,
     );
+    builder.addCase(
+      gameActions.startNewGame,
+      (state, { payload: { time } }) => ({
+        ...state,
+        edited: true,
+        time,
+      }),
+    );
   },
 });
 

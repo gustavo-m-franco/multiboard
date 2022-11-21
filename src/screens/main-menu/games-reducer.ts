@@ -1,11 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
-import { CaseReducer } from '@reduxjs/toolkit/src/createReducer';
 import { PayloadAction } from '@reduxjs/toolkit/src/createAction';
-import { gameActions, GameState } from '../game/game-reducer';
-import { PlayersState } from '../players/players-reducer';
+import { GameState } from '../game/game-reducer';
 import { StopwatchState } from '../stopwatch/stopwatch-reducer';
 import uuid from 'react-native-uuid';
+import { PlayersState } from '../players/players-types';
 
 interface SavedGame {
   gameSettings: GameState;
@@ -28,18 +26,15 @@ const initialState: GamesState = {
   savedGames: {},
 };
 
-interface GamesCaseReducers extends SliceCaseReducers<GamesState> {
-  startNewGame: CaseReducer<GamesState, PayloadAction<GameState>>;
-  saveGame: CaseReducer<GamesState, PayloadAction<SavedGame>>;
-  updateSavedGame: CaseReducer<GamesState, PayloadAction<SavedGame>>;
-  removeGame: CaseReducer<GamesState, PayloadAction<string>>;
-}
-
-const gamesSlice = createSlice<GamesState, GamesCaseReducers>({
+// TODO saveGame and updateSavedGame are the same?
+const gamesSlice = createSlice({
   name: 'games',
   initialState,
   reducers: {
-    startNewGame: (state, { payload: gameSettings }) => ({
+    startNewGame: (
+      state: GamesState,
+      { payload: gameSettings }: PayloadAction<GameState>,
+    ) => ({
       ...state,
       savedGames: {
         ...state.savedGames,
@@ -48,40 +43,33 @@ const gamesSlice = createSlice<GamesState, GamesCaseReducers>({
         },
       },
     }),
-    saveGame: (state, { payload: savedGame }) =>
-      savedGame.gameSettings.id
-        ? {
-            ...state,
-            activeGame: savedGame.gameSettings.id,
-            savedGames: {
-              ...state.savedGames,
-              [savedGame.gameSettings.id]: savedGame,
-            },
-          }
-        : state,
-    updateSavedGame: (state, { payload: savedGame }) =>
-      savedGame.gameSettings.id
+    saveGame: (
+      state: GamesState,
+      { payload: savedGame }: PayloadAction<SavedGame>,
+    ) =>
+      state.activeGame
         ? {
             ...state,
             savedGames: {
               ...state.savedGames,
-              [savedGame.gameSettings.id]: savedGame,
+              [state.activeGame]: savedGame,
             },
           }
         : state,
-    removeGame: (state, { payload: id }) => {
+    removeGame: (state: GamesState, { payload: id }: PayloadAction<string>) => {
       const { [id]: removedGame, ...savedGames } = state.savedGames;
       return {
         ...state,
         savedGames,
       };
     },
-  },
-  extraReducers: builder => {
-    builder.addCase(gameActions.loadGame, (state, { payload: { game } }) => ({
+    selectGame: (
+      state: GamesState,
+      { payload: id }: PayloadAction<string>,
+    ) => ({
       ...state,
-      activeGame: game.id,
-    }));
+      activeGame: id,
+    }),
   },
 });
 export const gamesReducer = gamesSlice.reducer;
