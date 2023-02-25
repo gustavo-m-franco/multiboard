@@ -3,7 +3,7 @@ export const trimName = (name: string, length: number): string =>
     ? `${name.substring(0, length - 2)}...`
     : name;
 
-export const formatNumberLength = (value: number, length: number) => {
+export const formatNumberLength = (value: number, length: number): string => {
   let stringValue = value.toString();
   while (stringValue.length < length) {
     stringValue = `0${stringValue}`;
@@ -11,7 +11,7 @@ export const formatNumberLength = (value: number, length: number) => {
   return stringValue;
 };
 
-export const formatMilliseconds = (time: string) => {
+export const formatMilliseconds = (time: string): number => {
   const timeParts = time.split(':');
   const minutes = Number(timeParts[0]);
   const seconds = Number(timeParts[1]);
@@ -19,7 +19,7 @@ export const formatMilliseconds = (time: string) => {
   return timeLimit;
 };
 
-export const formatTime = (elapsedTime: number) => {
+export const formatTime = (elapsedTime: number): string => {
   const minutes = formatNumberLength(Math.floor((elapsedTime / 60000) % 60), 2);
   const seconds = formatNumberLength(Math.floor((elapsedTime / 1000) % 60), 2);
   return `${minutes}:${seconds}`;
@@ -40,7 +40,7 @@ const MONTH_NAMES = [
   'December',
 ];
 
-export const formatDate = (date?: number) => {
+export const formatDate = (date?: number): string => {
   if (date) {
     const dateObject = new Date(date);
     const hours = dateObject.getHours();

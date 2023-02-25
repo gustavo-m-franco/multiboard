@@ -20,7 +20,7 @@ export class NavigationHeader extends Component<
     };
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     Animated.spring(this.state.animation, {
       toValue: 0,
       speed: 1,
@@ -29,7 +29,7 @@ export class NavigationHeader extends Component<
     }).start();
   }
 
-  render() {
+  render(): React.ReactNode {
     const { animation } = this.state;
     return (
       <View style={styles.container}>

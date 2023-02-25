@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export const ControlDescriptionLabel: React.FC<{ text: string }> = props => (
+export const ControlDescriptionLabel: React.FC<{ text: string }> = (props) => (
   <View style={styles.labelContainer}>
     <Text style={styles.label}>{props.text}</Text>
   </View>

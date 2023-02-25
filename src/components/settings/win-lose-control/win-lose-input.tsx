@@ -12,7 +12,7 @@ enum MaxScoreMeaning {
   LOSE = 'LOSES',
 }
 
-export const WinLoseInput: React.FC<WinLoseInputProps> = props => {
+export const WinLoseInput: React.FC<WinLoseInputProps> = (props) => {
   const onPress = () => props.onPress(!props.isMaxScoreWins);
   return (
     <View style={styles.container}>

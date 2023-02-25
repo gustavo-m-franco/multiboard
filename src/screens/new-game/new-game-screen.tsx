@@ -2,7 +2,11 @@ import { connect, MapStateToProps } from 'react-redux';
 import { AppState } from '../../get-store';
 import { GameSettingsForm } from '../../components/game-settings-form';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { gameActions, GameState, initialState } from '../game/game-reducer';
+import {
+  gameActions,
+  GameState,
+  initialState,
+} from '../scoreboard/game-reducer';
 import { RootStackParamList, Screens } from '../navigation/navigation-types';
 
 type NewGameScreenProps = NativeStackScreenProps<

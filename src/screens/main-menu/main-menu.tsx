@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import React, { Component } from 'react';
 import { AnimatedButton } from '../../components/button/animated-button';
-import { Alert } from '../alert';
+import { Alert } from '../../components/alert/alert';
 import { SavedGames } from './games-reducer';
 
 interface MainMenuProps {

@@ -60,5 +60,21 @@ module.exports = {
     'no-shadow': 'off',
     'react/jsx-indent': ['error', 2],
     'react/jsx-indent-props': ['error', 2],
+    'arrow-parens': ['error', 'always'],
+    'sort-imports': [
+      'error',
+      {
+        ignoreCase: false,
+        ignoreDeclarationSort: true,
+        ignoreMemberSort: true,
+        memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
+        allowSeparatedGroups: false,
+      },
+    ],
+    '@typescript-eslint/explicit-module-boundary-types': [
+      'error',
+      { allowArgumentsExplicitlyTypedAsAny: false },
+    ],
+    'arrow-body-style': ['error', 'as-needed'],
   },
 };

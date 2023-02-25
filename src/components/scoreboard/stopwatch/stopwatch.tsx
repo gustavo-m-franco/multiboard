@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { formatMilliseconds, formatTime } from './../../utility/format';
-import { GameStatus } from '../../screens/game/game-reducer';
+import { formatMilliseconds, formatTime } from '../../../utility/format';
+import { GameStatus } from '../../../screens/scoreboard/game-reducer';
 
 interface StopwatchProps {
   gameStatus: string;
@@ -10,6 +10,8 @@ interface StopwatchProps {
   elapsedTime: number;
   updateElapsedTime: (time: number) => void;
   updateTimeRunning: (isRunning: boolean) => void;
+  showTimerAlert: () => void;
+  scheduleNotification: () => void;
 }
 
 interface StopwatchState {
@@ -32,11 +34,11 @@ export class Stopwatch extends Component<StopwatchProps, StopwatchState> {
     };
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     this.interval = setInterval(this.onTick);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     clearInterval(this.interval as number);
   }
 
@@ -93,7 +95,9 @@ export class Stopwatch extends Component<StopwatchProps, StopwatchState> {
     }
   };
 
-  render() {
+  getTime = () => this.state.elapsedTime;
+
+  render(): React.ReactNode {
     return (
       <View style={styles.stopwatch}>
         <Text style={styles.stopwatchTitle}>STOPWATCH</Text>

@@ -1,14 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { formatDate } from './../../utility/format';
-import { Detail } from './Detail';
-import { GrowToScrollView } from '../animation/grow-to-scroll-view';
-import { AnimatedButton } from '../button/animated-button';
-import { Player } from '../../screens/players/players-types';
+import { formatDate } from '../../../utility/format';
+import { Detail } from './detail';
+import { GrowToScrollView } from '../../animation/grow-to-scroll-view';
+import { AnimatedButton } from '../../button/animated-button';
+import { Player } from '../../../screens/players/players-types';
 
 interface PlayerInfoProps {
   player: Player;
-  selectPlayer: (id?: string) => void;
+  selectPlayer: (name?: string) => void;
   rank?: number;
 }
 

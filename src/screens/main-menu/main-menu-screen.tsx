@@ -12,7 +12,7 @@ type MainMenuScreenProps = NativeStackScreenProps<
   Screens.MainMenu
 >;
 
-export const MainMenuScreen: React.FC<MainMenuScreenProps> = props => {
+export const MainMenuScreen: React.FC<MainMenuScreenProps> = (props) => {
   const { edited, savedGames, activeGame } = useSelector<AppState>(
     mainMenuSelector,
   ) as GamesState;

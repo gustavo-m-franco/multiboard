@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { PayloadAction } from '@reduxjs/toolkit/src/createAction';
-import { GameState } from '../game/game-reducer';
+import { GameState } from '../scoreboard/game-reducer';
 import { StopwatchState } from '../stopwatch/stopwatch-reducer';
-import uuid from 'react-native-uuid';
 import { PlayersState } from '../players/players-types';
 
 interface SavedGame {
@@ -38,7 +37,7 @@ const gamesSlice = createSlice({
       ...state,
       savedGames: {
         ...state.savedGames,
-        [uuid.v4() as string]: {
+        [gameSettings.id]: {
           gameSettings,
         },
       },

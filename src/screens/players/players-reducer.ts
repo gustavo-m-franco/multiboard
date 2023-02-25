@@ -1,38 +1,36 @@
 import { createSlice } from '@reduxjs/toolkit';
-import uuid from 'react-native-uuid';
-import { gameActions } from '../game/game-reducer';
+import { gameActions } from '../scoreboard/game-reducer';
 import {
-  PlayersCaseReducers,
   PlayersState,
   PlayerStatus,
+  UpdatePlayerScore,
+  UpdatePlayerStatus,
 } from './players-types';
-import { playersStub } from './players-mock';
+import { PayloadAction } from '@reduxjs/toolkit/src/createAction';
 
 export const initialState: PlayersState = {
-  selectedPlayerId: '3c92ce94-1663-46b4-a418-49d5a89e9ae5',
   edited: false,
-  players: playersStub,
+  players: {},
 };
 
-const playersSlice = createSlice<PlayersState, PlayersCaseReducers>({
+const playersSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
-    addPlayer: (state, { payload: name }) => ({
+    addPlayer: (state, { payload: name }: PayloadAction<string>) => ({
       ...state,
       edited: true,
       players: {
         ...state.players,
-        [uuid.v4() as string]: {
-          id: uuid.v4() as string,
-          name: name.trim().toUpperCase(),
+        [name]: {
+          name: name.trim(),
           score: 0,
           status: PlayerStatus.PLAYING,
           created: Date.now(),
         },
       },
     }),
-    removePlayer: (state, { payload: id }) => {
+    removePlayer: (state, { payload: id }: PayloadAction<string>) => {
       const { [id]: removedPlayer, ...players } = state.players;
       return {
         ...state,
@@ -40,39 +38,55 @@ const playersSlice = createSlice<PlayersState, PlayersCaseReducers>({
         players,
       };
     },
-    selectPlayer: (state, { payload: selectedPlayerId }) => ({
+    selectPlayer: (
+      state,
+      { payload: selectedPlayerId }: PayloadAction<string | undefined>,
+    ) => ({
       ...state,
       edited: true,
-      selectedPlayerId,
+      selectedPlayerName: selectedPlayerId,
     }),
-    updatePlayerScore: (state, { payload: { id, delta } }) => {
-      state.players[id] = {
-        ...state.players[id],
+    updatePlayerScore: (
+      state,
+      { payload: { name, delta } }: PayloadAction<UpdatePlayerScore>,
+    ) => {
+      state.players[name] = {
+        ...state.players[name],
         updated: Date.now(),
-        score: state.players[id].score + delta,
+        score: state.players[name].score + delta,
       };
     },
-    updatePlayerStatus: (state, { payload: { id, status, elapsedTime } }) => ({
+    updatePlayerStatus: (
+      state,
+      {
+        payload: { name, status, elapsedTime },
+      }: PayloadAction<UpdatePlayerStatus>,
+    ) => ({
       ...state,
       edited: true,
       players: {
         ...state.players,
-        [id]: {
-          ...state.players[id],
+        [name]: {
+          ...state.players[name],
           elapsedTime,
           status,
           finished: status !== PlayerStatus.PLAYING ? Date.now() : undefined,
         },
       },
     }),
-    updatePlayerElapsedTime: (state, { payload: { id, elapsedTime } }) => {
+    updatePlayerElapsedTime: (
+      state,
+      {
+        payload: { id, elapsedTime },
+      }: PayloadAction<{ id: string; elapsedTime: number }>,
+    ) => {
       state.players[id] = {
         ...state.players[id],
         elapsedTime,
       };
     },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder.addCase(
       gameActions.loadGame,
       (state, { payload: { players } }) => players,

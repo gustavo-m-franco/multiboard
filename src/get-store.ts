@@ -4,7 +4,10 @@ import {
   gamesReducer as games,
   GamesState,
 } from './screens/main-menu/games-reducer';
-import { gameReducer as game, GameState } from './screens/game/game-reducer';
+import {
+  gameReducer as game,
+  GameState,
+} from './screens/scoreboard/game-reducer';
 import { playersReducer as players } from './screens/players/players-reducer';
 import {
   stopwatchReducer as stopwatch,
@@ -15,14 +18,14 @@ import { PlayersState } from './screens/players/players-types';
 // import storage from 'redux-persist/lib/storage'
 // import { composeWithDevTools, } from 'redux-devtools-extension';
 // import { composeWithDevTools, } from 'remote-redux-devtools';
-// import createSagaMiddleware from 'redux-saga';
+import createSagaMiddleware from 'redux-saga';
 // import { createReduxBoundAddListener, createReactNavigationReduxMiddleware, } from 'react-navigation-redux-helpers';
 // import { updatePlayersStatusSaga, updateGameStatusSaga, saveGameSaga, } from './sagas';
 // import { game, games, players, stopwatch,} from './reducers';
 // import nav from './reducers/nav';
 // import screenTracking from './utility/gaTracking';
 
-// const sagaMiddleware = createSagaMiddleware();
+const sagaMiddleware = createSagaMiddleware();
 
 // const reactNavigationMiddleware = createReactNavigationReduxMiddleware(
 //   "root",
@@ -32,7 +35,7 @@ import { PlayersState } from './screens/players/players-types';
 // export const addListener = createReduxBoundAddListener("root");
 //
 // let enhancer
-const middleware: Middleware[] = [];
+const middleware: Middleware[] = [sagaMiddleware];
 if (__DEV__) {
   middleware.push(flipper());
 }

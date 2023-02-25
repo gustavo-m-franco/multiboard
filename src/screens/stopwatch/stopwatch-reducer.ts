@@ -2,7 +2,7 @@ import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { CaseReducer } from '@reduxjs/toolkit/src/createReducer';
 import { PayloadAction } from '@reduxjs/toolkit/src/createAction';
 import { createSlice } from '@reduxjs/toolkit';
-import { gameActions } from '../game/game-reducer';
+import { gameActions } from '../scoreboard/game-reducer';
 
 export interface StopwatchState {
   edited: boolean;
@@ -44,8 +44,8 @@ const stopwatchSlice = createSlice<StopwatchState, StopwatchCaseReducers>({
       running,
     }),
   },
-  extraReducers: builder => {
-    builder.addCase(gameActions.saveProgress, state => ({
+  extraReducers: (builder) => {
+    builder.addCase(gameActions.saveProgress, (state) => ({
       ...state,
       edited: false,
     }));

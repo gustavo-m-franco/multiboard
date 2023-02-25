@@ -9,7 +9,7 @@ interface TimedControlProps {
 }
 
 // TODO deprecated props
-export const TimedControl: React.FC<TimedControlProps> = props => {
+export const TimedControl: React.FC<TimedControlProps> = (props) => {
   const onChange = (): void => props.onChange(!props.timed);
   return (
     <ControlInputWrapper description={props.description}>

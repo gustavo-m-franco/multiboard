@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, ImageBackground } from 'react-native';
+import uuid from 'react-native-uuid';
 // @ts-expect-error
 // TODO
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { useForm, Controller } from 'react-hook-form';
 
 import { TimeLimitControl } from './settings/time-control/time-limit-control';
-import { GameState, StartNewGamePayload } from '../screens/game/game-reducer';
+import { GameState } from '../screens/scoreboard/game-reducer';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack/lib/typescript/src/types';
 import type { RouteProp } from '@react-navigation/native';
 import {
@@ -17,7 +18,7 @@ import { BringFromBottom } from './animation/bring-from-bottom';
 import { WinLoseControl } from './settings/win-lose-control/win-lose-control';
 import { MaxScoreControl } from './settings/max-score-control/max-score-control';
 import { TimedControl } from './settings/timedControl';
-import { Alert } from '../screens/alert';
+import { Alert } from './alert/alert';
 import { GameNameControl } from './settings/game-name-control/game-name-control';
 import { FooterSaveGame } from './settings/footer-save-name';
 
@@ -35,7 +36,7 @@ interface GamesSettingsProps {
   route: RouteProp<RootStackParamList>;
   navigation: NativeStackNavigationProp<RootStackParamList>;
   defaultValues: GameState;
-  save: (newGameDetails: StartNewGamePayload) => void;
+  save: (newGameDetails: GameState) => void;
 }
 
 export const GameSettingsForm: React.FC<GamesSettingsProps> = ({
@@ -80,7 +81,7 @@ export const GameSettingsForm: React.FC<GamesSettingsProps> = ({
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<StartNewGamePayload>({
+  } = useForm<GameState>({
     defaultValues,
   });
 
@@ -91,7 +92,8 @@ export const GameSettingsForm: React.FC<GamesSettingsProps> = ({
     setMessageText(undefined);
   };
 
-  const onSubmit = (data: StartNewGamePayload) => {
+  const onSubmit = (data: GameState) => {
+    data.id = uuid.v4() as string;
     save(data);
     navigation.navigate(Screens.Scoreboard);
   };

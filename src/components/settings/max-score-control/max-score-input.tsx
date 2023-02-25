@@ -72,7 +72,7 @@ export class MaxScoreInput extends Component<
         </TouchableOpacity>
         <View style={styles.scoreValue}>
           <TextInput
-            ref={input => {
+            ref={(input) => {
               this.inputRef = input;
             }}
             keyboardType="numeric"

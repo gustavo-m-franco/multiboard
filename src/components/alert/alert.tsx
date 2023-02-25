@@ -3,7 +3,7 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 import { StyleSheet } from 'react-native';
 
 interface AlertProps {
-  show: boolean;
+  show?: boolean;
   showProgress: boolean;
   message: string;
   title?: string;

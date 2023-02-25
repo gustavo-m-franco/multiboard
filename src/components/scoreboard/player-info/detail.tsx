@@ -6,14 +6,12 @@ interface DetailProps {
   value: string;
 }
 
-export const Detail: React.FC<DetailProps> = ({ label, value }) => {
-  return (
-    <View style={styles.detail}>
-      <Text style={styles.detailLabel}>{label}</Text>
-      <Text style={styles.detailValue}>{value}</Text>
-    </View>
-  );
-};
+export const Detail: React.FC<DetailProps> = ({ label, value }) => (
+  <View style={styles.detail}>
+    <Text style={styles.detailLabel}>{label}</Text>
+    <Text style={styles.detailValue}>{value}</Text>
+  </View>
+);
 
 const styles = StyleSheet.create({
   detail: {

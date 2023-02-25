@@ -8,7 +8,7 @@ interface MaxScoreSettingProps {
   onChange: (maxScore: number) => void;
 }
 
-export const MaxScoreControl: React.FC<MaxScoreSettingProps> = props => (
+export const MaxScoreControl: React.FC<MaxScoreSettingProps> = (props) => (
   <ControlInputWrapper description={props.description}>
     <MaxScoreInput maxScore={props.maxScore} onChange={props.onChange} />
   </ControlInputWrapper>

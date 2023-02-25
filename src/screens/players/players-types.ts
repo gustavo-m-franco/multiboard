@@ -1,15 +1,11 @@
-import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
-import { CaseReducer } from '@reduxjs/toolkit/src/createReducer';
-import { PayloadAction } from '@reduxjs/toolkit/src/createAction';
-
 export enum PlayerStatus {
   PLAYING = 'PLAYING',
   WON = 'WON',
   LOST = 'LOST',
+  ENDED = 'ENDED',
 }
 
 export interface Player {
-  id: string;
   name: string;
   score: number;
   status: PlayerStatus;
@@ -19,30 +15,21 @@ export interface Player {
   elapsedTime?: number;
 }
 
-export interface Players {
-  [key: string]: Player;
-}
+export type Players = Record<string, Player>;
 
 export interface PlayersState {
-  selectedPlayerId?: string;
+  selectedPlayerName?: string;
   edited: boolean;
   players: Players;
 }
 
-export interface PlayersCaseReducers extends SliceCaseReducers<PlayersState> {
-  addPlayer: CaseReducer<PlayersState, PayloadAction<string>>;
-  removePlayer: CaseReducer<PlayersState, PayloadAction<string>>;
-  selectPlayer: CaseReducer<PlayersState, PayloadAction<string | undefined>>;
-  updatePlayerScore: CaseReducer<
-    PlayersState,
-    PayloadAction<{ id: string; delta: number }>
-  >;
-  updatePlayerStatus: CaseReducer<
-    PlayersState,
-    PayloadAction<{ id: string; status: PlayerStatus; elapsedTime: number }>
-  >;
-  updatePlayerElapsedTime: CaseReducer<
-    PlayersState,
-    PayloadAction<{ id: string; elapsedTime: number }>
-  >;
+export interface UpdatePlayerScore {
+  name: string;
+  delta: number;
+}
+
+export interface UpdatePlayerStatus {
+  name: string;
+  status: PlayerStatus;
+  elapsedTime?: number;
 }

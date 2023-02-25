@@ -6,12 +6,17 @@ import {
   sortPlayersMaxScoreWins,
 } from '../../utility/sort';
 
+export const getSelectedPlayerName = createSelector(
+  (state: AppState): string | undefined => state.players.selectedPlayerName,
+  (selectedPlayerName) => selectedPlayerName,
+);
+
 export const getSelectedPlayer: (state: AppState) => Player | undefined =
   createSelector(
-    (state: AppState): string | undefined => state.players.selectedPlayerId,
+    getSelectedPlayerName,
     (state: AppState): Players => state.players.players,
-    (selectedPlayerId, players): Player | undefined =>
-      selectedPlayerId ? players[selectedPlayerId] : undefined,
+    (selectedPlayerName, players): Player | undefined =>
+      selectedPlayerName ? players[selectedPlayerName] : undefined,
   );
 
 export const getSelectedPlayerRank: (state: AppState) => number | undefined =
@@ -35,3 +40,20 @@ export const getSelectedPlayerRank: (state: AppState) => number | undefined =
       return rank;
     },
   );
+
+export const getTotalPoints = createSelector(
+  (state: AppState) => {
+    const playersArray = Object.values(state.players.players);
+    let total = 0;
+    for (const player of playersArray) {
+      total += player.score;
+    }
+    return total;
+  },
+  (totalPoints) => totalPoints,
+);
+
+export const getAmountOfPlayers = createSelector(
+  (state: AppState) => Object.values(state.players.players).length,
+  (amountOfPlayers) => amountOfPlayers,
+);

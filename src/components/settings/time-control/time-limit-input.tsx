@@ -93,7 +93,7 @@ export class TimeLimitInput extends Component<
       <View style={styles.container}>
         <View style={styles.innerContainer}>
           <TextInput
-            ref={input => {
+            ref={(input) => {
               this.inputRef = input;
             }}
             keyboardType="numeric"
